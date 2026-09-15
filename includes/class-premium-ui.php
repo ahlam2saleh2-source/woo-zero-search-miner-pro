@@ -31,11 +31,34 @@ class WZSMPRO_Premium_UI
         add_action('admin_notices', array($this, 'inject_navigation'), 1);
         add_action('admin_notices', array($this, 'inject_breadcrumbs'), 2);
 
+        // ✅ إضافة زر Dark Mode Toggle في كل صفحات wzsm
+        add_action('admin_footer', array($this, 'inject_theme_toggle_button'));
+
         // Dark mode body class
         add_filter('admin_body_class', array($this, 'maybe_dark_mode'));
 
         // AJAX للتبديل بين Dark/Light
         add_action('wp_ajax_wzsmpro_toggle_theme', array($this, 'ajax_toggle_theme'));
+    }
+
+    /**
+     * حقن زر Dark Mode Toggle (يظهر في أسفل الشاشة)
+     */
+    public function inject_theme_toggle_button()
+    {
+        if (!$this->is_wzsm_page()) {
+            return;
+        }
+        $settings = get_option(WZSMPRO_SETTINGS_KEY, array());
+        $is_dark = !empty($settings['dark_mode']);
+        ?>
+        <div class="wzsmpro-theme-toggle">
+            <button type="button" id="wzsmpro-toggle-theme" class="button button-secondary" title="<?php echo $is_dark ? esc_attr__('التبديل للوضع الفاتح', 'woo-zero-search-miner-pro') : esc_attr__('التبديل للوضع الداكن', 'woo-zero-search-miner-pro'); ?>">
+                <span class="dashicons <?php echo $is_dark ? 'dashicons-lightbulb' : 'dashicons-dark-mode-2'; ?>"></span>
+                <span class="toggle-text"><?php echo $is_dark ? esc_html__('فاتح', 'woo-zero-search-miner-pro') : esc_html__('داكن', 'woo-zero-search-miner-pro'); ?></span>
+            </button>
+        </div>
+        <?php
     }
 
     /**

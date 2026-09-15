@@ -8,10 +8,12 @@
 
     $(function() {
 
-        // ════════════ تبديل Dark/Light Mode ════════════
-        $('#wzsmpro-toggle-theme').on('click', function(e) {
+        // ════════════ تبديل Dark/Light Mode (مع تأثير سلس) ════════════
+        $(document).on('click', '#wzsmpro-toggle-theme', function(e) {
             e.preventDefault();
             var $btn = $(this);
+            var $icon = $btn.find('.dashicons');
+            var $text = $btn.find('.toggle-text');
             $btn.prop('disabled', true);
 
             $.post(wzsmpro.ajax_url, {
@@ -22,10 +24,22 @@
                 if (resp && resp.success) {
                     if (resp.data.dark_mode) {
                         $('body').addClass('wzsmpro-dark-mode');
+                        $icon.removeClass('dashicons-lightbulb').addClass('dashicons-dark-mode-2');
+                        $text.text('فاتح');
                     } else {
                         $('body').removeClass('wzsmpro-dark-mode');
+                        $icon.removeClass('dashicons-dark-mode-2').addClass('dashicons-lightbulb');
+                        $text.text('داكن');
                     }
+                    // تأثير نبضة بسيط للتأكيد
+                    $btn.css('transform', 'scale(1.1)');
+                    setTimeout(function() { $btn.css('transform', ''); }, 200);
+                } else {
+                    alert('فشل التبديل: ' + (resp.data || 'حاول مرة أخرى'));
                 }
+            })
+            .fail(function() {
+                alert('خطأ في الاتصال. تأكد من أنك مسجل الدخول.');
             })
             .always(function() {
                 $btn.prop('disabled', false);

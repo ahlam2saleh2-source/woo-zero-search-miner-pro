@@ -80,18 +80,18 @@ class WZSMPRO_Admin
      */
     public function enqueue_admin_assets($hook)
     {
-        if (strpos($hook, 'wzsm') === false) {
+        if (strpos($hook, 'wzsm') === false && strpos($hook, 'wzsmpro') === false) {
             return;
         }
         wp_enqueue_style(
-            'wzsm-admin',
-            WZSMPRO_PLUGIN_URL . 'assets/css/admin.css',
+            'wzsmpro-admin',
+            WZSMPRO_PLUGIN_URL . 'assets/css/admin-pro.css',
             array(),
             WZSMPRO_VERSION
         );
         wp_enqueue_script(
-            'wzsm-admin',
-            WZSMPRO_PLUGIN_URL . 'assets/js/admin.js',
+            'wzsmpro-admin',
+            WZSMPRO_PLUGIN_URL . 'assets/js/admin-pro.js',
             array('jquery'),
             WZSMPRO_VERSION,
             true
