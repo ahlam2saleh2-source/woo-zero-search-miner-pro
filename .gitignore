@@ -1,0 +1,28 @@
+# WordPress
+*.log
+wp-config.php
+wp-content/uploads/
+wp-content/upgrade/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+/build/
+/dist/
+*.zip
+*.tar.gz
+
+# Node
+node_modules/
+package-lock.json
+
+# License data (حسّاس - لا يحفظ في git)
+.license-cache/
